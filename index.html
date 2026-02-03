@@ -1,13 +1,9 @@
-  <!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <!-- VERY IMPORTANT FOR PHONE -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Be My Valentine 💖</title>
-
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -16,40 +12,39 @@
   <div class="container">
     <h1>Will you be my du3du3 Valentine? 💘</h1>
 
-    <!-- Cute image in the middle -->
-    <img src="cute-picture.gif" alt="cute love" class="love-gif">
+    <img src="cute-picture.gif" class="love-gif" alt="love">
 
     <div class="buttons">
       <a href="yes.html" class="yes">Yes ❤️</a>
-      <button class="no" id="noBtn">No 💔</button>
+      <button class="no vibrate" id="noBtn">No 💔</button>
     </div>
   </div>
 
-  <!-- Crying emojis overlay -->
-  <div id="crying-overlay"></div>
+  <!-- FULLSCREEN emoji layer -->
+  <div id="emoji-layer"></div>
 
   <script>
     const noBtn = document.getElementById("noBtn");
-    const overlay = document.getElementById("crying-overlay");
+    const layer = document.getElementById("emoji-layer");
 
     noBtn.addEventListener("click", () => {
-      overlay.style.display = "block";
+      layer.innerHTML = "";
+      layer.style.display = "block";
 
-      // create MANY emojis
-      for (let i = 0; i < 80; i++) {
-        const emoji = document.createElement("div");
-        emoji.innerText = "😭";
-        emoji.className = "cry-emoji";
+      const total = 120; // LOTS of emojis
 
-        emoji.style.left = Math.random() * 100 + "vw";
-        emoji.style.animationDuration = (Math.random() * 0.5 + 0.8) + "s";
+      for (let i = 0; i < total; i++) {
+        const e = document.createElement("div");
+        e.className = "cry-emoji";
+        e.textContent = "😭";
 
-        overlay.appendChild(emoji);
+        e.style.left = Math.random() * 100 + "vw";
+        e.style.top = Math.random() * 100 + "vh";
+        e.style.animationDuration = (Math.random() * 0.8 + 0.6) + "s";
 
-        setTimeout(() => emoji.remove(), 1000);
+        layer.appendChild(e);
       }
 
-      // go to no page after 1 second
       setTimeout(() => {
         window.location.href = "no.html";
       }, 1000);
