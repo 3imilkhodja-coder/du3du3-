@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Be My Valentine 💖</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Tears */
+    .tear {
+      position: absolute;
+      pointer-events: none;
+      font-size: 20px;
+      animation: floatDown 1s linear forwards;
+    }
+
+    @keyframes floatDown {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(30px, 500px) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Vibrate button */
+    .vibrate {
+      animation: vibrate 0.2s linear infinite;
+    }
+
+    @keyframes vibrate {
+      0% { transform: translate(1px, 1px); }
+      20% { transform: translate(-1px, -2px); }
+      40% { transform: translate(-3px, 0px); }
+      60% { transform: translate(3px, 2px); }
+      80% { transform: translate(1px, -1px); }
+      100% { transform: translate(0, 0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="container">
+    <h1>Will you be my du3du3 Valentine? 💘</h1>
+
+    <img src="cute-picture.gif" alt="cute sticker" class="love-gif">
+
+    <div class="buttons">
+      <a href="yes.html" class="yes">Yes ❤️</a>
+      <button class="no" id="noBtn">No 💔</button>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+
+    function createTear() {
+      const tear = document.createElement("div");
+      tear.className = "tear";
+      tear.innerText = "😢";
+
+      // Random start position
+      const x = Math.random() * window.innerWidth;
+      const y = Math.random() * window.innerHeight / 2;
+      tear.style.left = x + "px";
+      tear.style.top = y + "px";
+
+      // Random size
+      tear.style.fontSize = 15 + Math.random() * 20 + "px";
+
+      // Apply animation
+      tear.style.animationName = "floatDown";
+      tear.style.animationDuration = "1s";
+      tear.style.animationTimingFunction = "linear";
+
+      document.body.appendChild(tear);
+
+      // Remove after 1 second
+      setTimeout(() => tear.remove(), 1000);
+    }
+
+    function rainTearsSmooth(count, interval) {
+      let i = 0;
+      const id = setInterval(() => {
+        createTear();
+        i++;
+        if (i >= count) clearInterval(id);
+      }, interval);
+    }
+
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // Vibrate button
+      noBtn.classList.add("vibrate");
+
+      // Create tears gradually for smooth effect
+      rainTearsSmooth(100, 10); // 100 tears, every 10ms
+
+      // Redirect after 1 second
+      setTimeout(() => {
+        window.location.href = "no.html";
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
