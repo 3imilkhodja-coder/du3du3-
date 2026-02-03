@@ -2,48 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+
+  <!-- VERY IMPORTANT FOR PHONE -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Be My Valentine 💖</title>
+
   <link rel="stylesheet" href="style.css">
-  <style>
-    /* Tears */
-    .tear {
-      position: absolute;
-      pointer-events: none;
-      font-size: 20px;
-      animation: floatDown 1s linear forwards;
-    }
-
-    @keyframes floatDown {
-      0% {
-        transform: translate(0, 0) rotate(0deg);
-        opacity: 1;
-      }
-      100% {
-        transform: translate(30px, 500px) rotate(360deg);
-        opacity: 0;
-      }
-    }
-
-    /* Vibrate button */
-    .vibrate {
-      animation: vibrate 0.2s linear infinite;
-    }
-
-    @keyframes vibrate {
-      0% { transform: translate(1px, 1px); }
-      20% { transform: translate(-1px, -2px); }
-      40% { transform: translate(-3px, 0px); }
-      60% { transform: translate(3px, 2px); }
-      80% { transform: translate(1px, -1px); }
-      100% { transform: translate(0, 0); }
-    }
-  </style>
 </head>
+
 <body>
-  <div class="container" id="container">
+
+  <div class="container">
     <h1>Will you be my du3du3 Valentine? 💘</h1>
 
-    <img src="cute-picture.gif" alt="cute sticker" class="love-gif">
+    <!-- Cute image in the middle -->
+    <img src="cute-picture.gif" alt="cute love" class="love-gif">
 
     <div class="buttons">
       <a href="yes.html" class="yes">Yes ❤️</a>
@@ -51,57 +25,36 @@
     </div>
   </div>
 
+  <!-- Crying emojis overlay -->
+  <div id="crying-overlay"></div>
+
   <script>
     const noBtn = document.getElementById("noBtn");
+    const overlay = document.getElementById("crying-overlay");
 
-    function createTear() {
-      const tear = document.createElement("div");
-      tear.className = "tear";
-      tear.innerText = "😢";
+    noBtn.addEventListener("click", () => {
+      overlay.style.display = "block";
 
-      // Random start position
-      const x = Math.random() * window.innerWidth;
-      const y = Math.random() * window.innerHeight / 2;
-      tear.style.left = x + "px";
-      tear.style.top = y + "px";
+      // create MANY emojis
+      for (let i = 0; i < 80; i++) {
+        const emoji = document.createElement("div");
+        emoji.innerText = "😭";
+        emoji.className = "cry-emoji";
 
-      // Random size
-      tear.style.fontSize = 15 + Math.random() * 20 + "px";
+        emoji.style.left = Math.random() * 100 + "vw";
+        emoji.style.animationDuration = (Math.random() * 0.5 + 0.8) + "s";
 
-      // Apply animation
-      tear.style.animationName = "floatDown";
-      tear.style.animationDuration = "1s";
-      tear.style.animationTimingFunction = "linear";
+        overlay.appendChild(emoji);
 
-      document.body.appendChild(tear);
+        setTimeout(() => emoji.remove(), 1000);
+      }
 
-      // Remove after 1 second
-      setTimeout(() => tear.remove(), 1000);
-    }
-
-    function rainTearsSmooth(count, interval) {
-      let i = 0;
-      const id = setInterval(() => {
-        createTear();
-        i++;
-        if (i >= count) clearInterval(id);
-      }, interval);
-    }
-
-    noBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-
-      // Vibrate button
-      noBtn.classList.add("vibrate");
-
-      // Create tears gradually for smooth effect
-      rainTearsSmooth(100, 10); // 100 tears, every 10ms
-
-      // Redirect after 1 second
+      // go to no page after 1 second
       setTimeout(() => {
         window.location.href = "no.html";
       }, 1000);
     });
   </script>
+
 </body>
 </html>
